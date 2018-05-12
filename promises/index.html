@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <button>Click</button>
+
+    <script>
+    // since we expect counter to change over time we are setting it as "let"
+      let counter = 0;
+
+      document.querySelector('button').addEventListener('click', () => {
+        ++counter;
+      });
+
+      setTimeout(() => {
+        if (counter > 5) {
+          alert('you won!!! you clicked ' + counter + ' times');
+        } else {
+          alert('you lost');
+        }
+      }, 2000)
+    </script>
+  </body>
+</html>
