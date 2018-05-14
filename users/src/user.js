@@ -11,11 +11,25 @@ const UserSchema = new Schema({
     },
     required: [true, 'Name is required.']
   },
-  posts: [PostSchema]
+  posts: [PostSchema],
+  likes: Number,
+  blogPosts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'blogPost'
+  }]
 }, { usePushEach: true });
 
 UserSchema.virtual('postCount').get(function() {
   return this.posts.length;
+});
+
+//this is the middleware part of the user schema
+UserSchema.pre('remove', function(next) {
+  const BlogPost = mongoose.model('blogPost');
+  //this === Joe
+
+  BlogPost.remove({ _id: { $in: this.blogPosts } })
+    .then(() => next());
 });
 
 const User = mongoose.model('user', UserSchema);
